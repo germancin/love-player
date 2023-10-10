@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import io from "socket.io-client";
 import world from "./video.mp4";
 
-const socket = io("http://localhost:3001");
+const socket = io("http://146.190.37.141:3000");
 
 function App() {
   const videoRef = useRef(null);
