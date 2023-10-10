@@ -9,7 +9,7 @@ app.use(cors()); // apply cors middleware
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://binarylab.app", // or whichever origin you want to allow
+        origin: "*",
         methods: ["GET", "POST"],
     },
 });
@@ -36,6 +36,6 @@ io.on("connection", (socket) => {
     });
 });
 
-server.listen(3000, () => {
-    console.log("Server running on port 3000");
+server.listen(3005, () => {
+    console.log("Server running on port 3005");
 });
