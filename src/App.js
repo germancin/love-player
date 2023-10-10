@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useEffect, useState } from "react";
+import io from "socket.io-client";
+import world from "./world.mp4";
+
+const socket = io("http://localhost:3001");
 
 function App() {
+  const videoRef = useRef(null);
+  const [videoTime, setVideoTime] = useState(0);
+
+  useEffect(() => {
+    socket.on("play", () => {
+      videoRef.current.play();
+    });
+
+    socket.on("pause", () => {
+      videoRef.current.pause();
+    });
+
+    socket.on("timeupdate", (time) => {
+      videoRef.current.currentTime = time;
+    });
+  }, []);
+
+  const handlePlay = () => {
+    socket.emit("play");
+    socket.emit("timeupdate", videoTime);
+  };
+
+  const handlePause = () => {
+    socket.emit("pause");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <video
+        onTimeUpdate={(e) => setVideoTime(e.target.currentTime)}
+        ref={videoRef}
+        width="400"
+        src={world}
+        type="video/mp4"
+        controls
+      ></video>
+      <button onClick={handlePlay}>Play</button>
+      <button onClick={handlePause}>Pause</button>
     </div>
   );
 }
