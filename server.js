@@ -9,7 +9,7 @@ app.use(cors()); // apply cors middleware
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "http://146.190.37.141:3001/",
+        origin: "*",
         methods: ["GET", "POST"],
     },
 });
