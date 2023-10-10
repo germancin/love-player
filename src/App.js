@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import io from "socket.io-client";
-import world from "./world.mp4";
+import world from "./video.mp4";
 
 const socket = io("http://localhost:3001");
 
